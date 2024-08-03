@@ -22,9 +22,9 @@ namespace Model.Empleados
 
         public string segundoApellido { get; set; }
 
-        public DateFormat fechaNacimiento { get; set; }
+        public DateTime fechaNacimiento { get; set; }
 
-        public DateFormat fechaIngreso { get; set; }
+        public DateTime fechaIngreso { get; set; }
 
         public string telefono { get; set; }
 

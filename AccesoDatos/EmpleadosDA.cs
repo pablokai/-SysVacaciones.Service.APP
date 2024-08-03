@@ -31,7 +31,7 @@ namespace SysVacacionesDAL
 
             try
             {
-                var connection = connectionManager.GetConnection();
+                using var connection = connectionManager.GetConnection();
                 var result = await connection.QueryAsync<Empleados>(
                     sql: "sp_ListarEmpleadosActivos",
                     commandType: System.Data.CommandType.StoredProcedure

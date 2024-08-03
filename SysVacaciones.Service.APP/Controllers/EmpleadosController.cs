@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Model.Empleados;
-using Model.Puestos;
 using SysVacacionesBL;
 using SysVacacionesDAL.Interface;
 using SysVacacionesMODEL.Empleados;
 
 namespace SysVacaciones.Service.Controllers
 {
-    public class EmpleadosController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EmpleadosController : ControllerBase
     {
         private readonly EmpleadosBL empleadosBL;
         private readonly PuestosBL puestosBL;
@@ -19,47 +19,30 @@ namespace SysVacaciones.Service.Controllers
             puestosBL = new PuestosBL(puestosDA);
         }
 
-        public async Task<ActionResult> Index()
+        [HttpGet]
+        [Route("ListarEmpleados")]
+        public async Task<ActionResult> ListarEmpleados()
         {
             try
             {
                 var empleados = await empleadosBL.listarEmpleados();
-                if (empleados != null)
-                {
-                    return View(empleados);
-                }
-                else
-                {
-                    return View(new List<Empleados>());
-                }
+
+                return StatusCode(200, empleados);
+
             }
             catch (Exception ex)
             {
-                return Json(new { mensaje = ex.Message });
+                throw ;
             }
         }
 
-        public async Task<ActionResult> Details()
-        {
-            return View();
-        }
-
-        public async Task<ActionResult> Create()
-        {
-            ViewBag.puestos = await obtenerPuesto();
-            return View();
-        }
 
         [HttpPost]
-        public async Task<ActionResult> Create(EmpleadosAgregar empleados)
+        [Route("InsertarEmpleado")]
+        public async Task<ActionResult> InsertarEmpleado(EmpleadosAgregar empleados)
         {
             try
             {
-                ViewBag.puestos = await obtenerPuesto();
-                if (!ModelState.IsValid)
-                {
-                    return View(empleados);
-                }
                 Empleados nuevoEmpleado = new Empleados()
                 {
                     cedula = empleados.cedula,
@@ -77,67 +60,61 @@ namespace SysVacaciones.Service.Controllers
                     estado = empleados.estado
                 };
 
-                ViewBag.ValorMensaje = 0;
-                ViewBag.MensajePorceso = "Se creo un nuevo empleado";
 
-                return View(empleados);
+
+                return StatusCode(200, nuevoEmpleado);
 
             }
             catch (Exception ex)
             {
-                ViewBag.ValorMensaje = 1;
-                ViewBag.MensajePorceso = "No se pudo crear el nuevo empleado " + ex;
-                return View(empleados);
+                throw;
             }
         }
 
-        public async Task<List<SelectListItem>> obtenerPuesto()
-        {
-            List<Puestos> respuesta = await puestosBL.listarPuestos();
+        //public async Task<List<SelectListItem>> obtenerPuesto()
+        //{
+        //    List<Puestos> respuesta = await puestosBL.listarPuestos();
 
-            if (respuesta != null)
-            {
-                List<SelectListItem> dropdown = respuesta.Select(x => new SelectListItem
-                {
-                    Text = x.nombrePuesto,
-                    Value = x.puestoID.ToString(),
-                }).ToList();
+        //    if (respuesta != null)
+        //    {
+        //        List<SelectListItem> dropdown = respuesta.Select(x => new SelectListItem
+        //        {
+        //            Text = x.nombrePuesto,
+        //            Value = x.puestoID.ToString(),
+        //        }).ToList();
 
-                return dropdown;
-            }
+        //        return dropdown;
+        //    }
 
-            return new List<SelectListItem>();
-        }
+        //    return new List<SelectListItem>();
+        //}
 
-        public async Task<ActionResult> Edit(int id)
-        {
-            try
-            {
-                ViewBag.Puestos = await obtenerPuesto();
-                EmpleadosEditar empleados = new EmpleadosEditar();
-                Empleados nuevoEmpleado = new Empleados()
-                {
-                    Id = id,
-                };
-                var respuesta = await empleadosBL.obtenerEmpleados(nuevoEmpleado);
-                return View(empleados);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { mensaje = ex.Message });
-            }
-        }
+        //public async Task<ActionResult> ModificarEmpleado(int id)
+        //{
+        //    try
+        //    {
+        //        ViewBag.Puestos = await obtenerPuesto();
+        //        EmpleadosEditar empleados = new EmpleadosEditar();
+        //        Empleados nuevoEmpleado = new Empleados()
+        //        {
+        //            Id = id,
+        //        };
+        //        var respuesta = await empleadosBL.obtenerEmpleados(nuevoEmpleado);
+        //        return View(empleados);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { mensaje = ex.Message });
+        //    }
+        //}
 
         [HttpPost]
-        public async Task<ActionResult> Edit(EmpleadosEditar empleados)
+        [Route("ModificarEmpleado")]
+        public async Task<ActionResult> ModificarEmpleado(EmpleadosEditar empleados)
         {
             try
             {
-                ViewBag.Puestos = await obtenerPuesto();
-                if (!ModelState.IsValid)
-                {
-                    return View(empleados);
-                }
+               
                 Empleados nuevoEmpleado = new Empleados()
                 {
                     Id = empleados.Id,
@@ -157,63 +134,52 @@ namespace SysVacaciones.Service.Controllers
                 };
                 var respuesta = await empleadosBL.editarEmpleado(nuevoEmpleado);
 
-                ViewBag.ValorMensaje = 0;
-                ViewBag.MensajeProceso = "Empleado acualizado satisfactoriamente";
 
-                return View(empleados);
+
+                return StatusCode(200, respuesta);
             }
             catch (Exception ex)
             {
-                ViewBag.ValorMensaje = 1;
-                ViewBag.MensajeProceso = "Error al editar la información del empleado" + ex.Message;
-                return View(empleados);
+                throw;
             }
         }
 
-        public async Task<ActionResult> Inactivar(int id)
-        {
-            try
-            {
-                EmpleadosInactivar empleados = new EmpleadosInactivar();
-                Empleados nuevoEmpleado = new Empleados()
-                {
-                    Id = id,
-                };
-                var respuesta = await empleadosBL.obtenerEmpleados(nuevoEmpleado);
-                return View(empleados);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { mensaje = ex.Message });
-            }
-        }
+        //public async Task<ActionResult> Inactivar(int id)
+        //{
+        //    try
+        //    {
+        //        EmpleadosInactivar empleados = new EmpleadosInactivar();
+        //        Empleados nuevoEmpleado = new Empleados()
+        //        {
+        //            Id = id,
+        //        };
+        //        var respuesta = await empleadosBL.obtenerEmpleados(nuevoEmpleado);
+        //        return View(empleados);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { mensaje = ex.Message });
+        //    }
+        //}
 
         [HttpPost]
-        public async Task<ActionResult> Inactivar(EmpleadosInactivar empleados)
+        [Route("InactivarEmpleado")]
+        public async Task<ActionResult> InactivarEmpleado(EmpleadosInactivar empleados)
         {
             try
             {
-                ViewBag.Puestos = await obtenerPuesto();
-                if (!ModelState.IsValid)
-                {
-                    return View(empleados);
-                }
+           
                 Empleados nuevoEmpleado = new Empleados()
                 {
                     Id = empleados.Id
                 };
                 var respuesta = await empleadosBL.inactivarEmpleados(nuevoEmpleado);
 
-                ViewBag.ValorMensaje = 0;
-                ViewBag.MensajeProceso = "Empleado desactivado satisfactoriamente";
-
-                return View(empleados);
+                return StatusCode(200, respuesta);
             }
             catch (Exception ex)
             {
-                ViewBag.ValorMensaje = 1;
-                ViewBag.MensajeProceso = "Error al desactivar el empleado" + ex.Message;
-                return View(empleados);
+                throw;
             }
         }
     }
