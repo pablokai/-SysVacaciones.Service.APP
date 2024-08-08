@@ -60,7 +60,7 @@ namespace SysVacaciones.Service.Controllers
                     estado = empleados.estado
                 };
 
-
+                await empleadosBL.insertarEmpleado(nuevoEmpleado);
 
                 return StatusCode(200, nuevoEmpleado);
 
@@ -174,6 +174,27 @@ namespace SysVacaciones.Service.Controllers
                     Id = empleados.Id
                 };
                 var respuesta = await empleadosBL.inactivarEmpleados(nuevoEmpleado);
+
+                return StatusCode(200, respuesta);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("BuscarEmpleado")]
+        public async Task<ActionResult> BuscarEmpleado(Empleados empleados)
+        {
+            try
+            {
+
+                Empleados nuevoEmpleado = new Empleados()
+                {
+                    Id = empleados.Id
+                };
+                var respuesta = await empleadosBL.buscarEmpleado(nuevoEmpleado);
 
                 return StatusCode(200, respuesta);
             }

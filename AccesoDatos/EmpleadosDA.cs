@@ -60,20 +60,19 @@ namespace SysVacacionesDAL
                 var parameters = new DynamicParameters();
 
                 parameters.Add("@Cedula", empleados.cedula, System.Data.DbType.String);
-                parameters.Add("@PrimerNombre", empleados.primerNombre, System.Data.DbType.Int32);
+                parameters.Add("@PrimerNombre", empleados.primerNombre, System.Data.DbType.String);
                 parameters.Add("@SegundoNombre", empleados.segundoNombre, System.Data.DbType.String);
                 parameters.Add("@PrimerApellido", empleados.primerApellido, System.Data.DbType.String);
                 parameters.Add("@SegundoApellido", empleados.segundoApellido, System.Data.DbType.String);
                 parameters.Add("@FechaNacimiento", empleados.fechaNacimiento, System.Data.DbType.Date);
-                parameters.Add("@FechaIngreo", empleados.fechaIngreso, System.Data.DbType.Date);
+                parameters.Add("@FechaIngreso", empleados.fechaIngreso, System.Data.DbType.Date);
                 parameters.Add("@Telefono", empleados.telefono, System.Data.DbType.String);
                 parameters.Add("@CorreoElectronico", empleados.correoElectronico, System.Data.DbType.String);
                 parameters.Add("@Direccion", empleados.direccion, System.Data.DbType.String);
                 parameters.Add("@Puesto", empleados.puesto, System.Data.DbType.String);
                 parameters.Add("@Salario", empleados.salario, System.Data.DbType.Decimal);
-                parameters.Add("@Estado", empleados.estado, System.Data.DbType.String);
 
-                var result = await connection.QueryAsync<DisponiblesAgregar>(
+                var result = await connection.QueryAsync<Empleados>(
                     sql: "sp_InsertarEmpleado",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure
@@ -97,13 +96,11 @@ namespace SysVacacionesDAL
                 var parameters = new DynamicParameters();
 
                 parameters.Add("@ID", empleados.Id, System.Data.DbType.Int32);
-                parameters.Add("@Cedula", empleados.cedula, System.Data.DbType.String);
-                parameters.Add("@PrimerNombre", empleados.primerNombre, System.Data.DbType.Int32);
+                parameters.Add("@PrimerNombre", empleados.primerNombre, System.Data.DbType.String);
                 parameters.Add("@SegundoNombre", empleados.segundoNombre, System.Data.DbType.String);
                 parameters.Add("@PrimerApellido", empleados.primerApellido, System.Data.DbType.String);
                 parameters.Add("@SegundoApellido", empleados.segundoApellido, System.Data.DbType.String);
                 parameters.Add("@FechaNacimiento", empleados.fechaNacimiento, System.Data.DbType.Date);
-                parameters.Add("@FechaIngreo", empleados.fechaIngreso, System.Data.DbType.Date);
                 parameters.Add("@Telefono", empleados.telefono, System.Data.DbType.String);
                 parameters.Add("@CorreoElectronico", empleados.correoElectronico, System.Data.DbType.String);
                 parameters.Add("@Direccion", empleados.direccion, System.Data.DbType.String);
@@ -162,6 +159,37 @@ namespace SysVacacionesDAL
             return respuesta;
         }
 
+        public async Task<EmpleadosDetalles> buscarEmpleado(Empleados empleados)
+        {
+            EmpleadosDetalles respuesta = new EmpleadosDetalles();
+            try
+            {
+                var connection = connectionManager.GetConnection();
+                var parameters = new DynamicParameters();
+
+                parameters.Add("@ID", empleados.Id, System.Data.DbType.Int32);
+
+                var result = await connection.QueryAsync<EmpleadosDetalles>(
+                    sql: "sp_ObtenerEmpleado",
+                    param: parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                    );
+
+                if (result != null)
+                {
+                    respuesta = result.FirstOrDefault();
+
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return respuesta;
+        }
+
+
         public async Task<EmpleadosInactivar> inactivarEmpleados(Empleados empleados)
         {
             EmpleadosInactivar respuesta = new EmpleadosInactivar();
@@ -177,6 +205,12 @@ namespace SysVacacionesDAL
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                     );
+
+                if (result != null)
+                {
+                    respuesta = result.FirstOrDefault();
+
+                }
             }
             catch (Exception)
             {
