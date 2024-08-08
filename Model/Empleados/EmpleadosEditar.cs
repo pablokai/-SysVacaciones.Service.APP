@@ -29,10 +29,10 @@ namespace Model.Empleados
         public string segundoApellido { get; set; }
 
         [Display(Name = "Fecha Nacimiento")]
-        public DateFormat fechaNacimiento { get; set; }
+        public DateTime fechaNacimiento { get; set; }
 
         [Display(Name = "Fecha Ingreso")]
-        public DateFormat fechaIngreso { get; set; }
+        public DateTime fechaIngreso { get; set; }
 
         [Display(Name = "Telefono")]
         public string telefono { get; set; }

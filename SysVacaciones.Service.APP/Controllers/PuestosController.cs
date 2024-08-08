@@ -1,12 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Model.Puestos;
+using SysVacacionesBL;
+using SysVacacionesDAL.Interface;
 
 namespace SysVacaciones.Service.Controllers
 {
-    public class PuestosController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PuestosController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly PuestosBL puestosBL;
+
+        public PuestosController(IPuestosDA puestosDA)
         {
-            return View();
+            puestosBL = new PuestosBL(puestosDA);
         }
+        [HttpGet]
+        [Route("ListarPuestos")]
+        public async Task<ActionResult> ListarPuestos()
+        {
+            try
+            {
+                var puestos = await puestosBL.listarPuestos();
+
+                return StatusCode(200, puestos);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

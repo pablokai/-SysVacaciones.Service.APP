@@ -1,12 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Model.DiasDisponibles;
+using Model.Empleados;
+using SysVacacionesBL;
+using SysVacacionesDAL.Interface;
+using SysVacacionesDAL;
 
 namespace SysVacaciones.Service.Controllers
 {
-    public class DisponiblesController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class DisponiblesController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly DisponiblesBL disponiblesBL;
+        private readonly EmpleadosBL empleadosBL;
+
+        public DisponiblesController(IDisponiblesDA disponiblesDA, EmpleadosDA empleadosDA)
         {
-            return View();
+            disponiblesBL = new DisponiblesBL(disponiblesDA);
+            empleadosBL = new EmpleadosBL(empleadosDA);
         }
+
+
     }
 }

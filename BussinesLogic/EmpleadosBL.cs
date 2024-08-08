@@ -39,6 +39,12 @@ namespace SysVacacionesBL
             return await empleadoDA.obtenerEmpleado(empleado);
         }
 
+        public async Task<EmpleadosDetalles> buscarEmpleado(Empleados empleado)
+        {
+            return await empleadoDA.buscarEmpleado(empleado);
+        }
+
+
         public async Task<EmpleadosInactivar> inactivarEmpleados(Empleados empleados)
         {
             return await empleadoDA.inactivarEmpleados(empleados);
