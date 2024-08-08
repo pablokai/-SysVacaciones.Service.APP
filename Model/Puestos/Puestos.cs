@@ -8,8 +8,8 @@ namespace Model.Puestos
 {
     public class Puestos
     {
-        public int puestoID { get; set; }
-        public string nombrePuesto { get; set; }
+        public int ID { get; set; }
+        public string Nombre { get; set; }
 
     }
 }

@@ -16,6 +16,8 @@ namespace SysVacacionesDAL.Interface
         Task<EmpleadosAgregar> insertarEmpleado(Empleados empleado);
         Task<EmpleadosEditar> editarEmpleado(Empleados empleado);
         Task<EmpleadosDetalles> obtenerEmpleado(Empleados empleado);
+        Task<EmpleadosDetalles> buscarEmpleado(Empleados empleado);
+
         Task<EmpleadosInactivar> inactivarEmpleados(Empleados empleados);
     }
 }

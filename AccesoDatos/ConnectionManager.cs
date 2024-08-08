@@ -21,7 +21,7 @@ namespace DataAccess
 
         public IDbConnection GetConnection()
         {
-            return new SqlConnection(ConfigurationExtensions.GetConnectionString(Configuration, "DB_Connection"));   
+            return new SqlConnection(ConfigurationExtensions.GetConnectionString(Configuration, "DB"));   
         }
     }
 }

@@ -31,7 +31,7 @@ namespace SysVacacionesDAL
             {
                 var connection = connectionManager.GetConnection();
                 var result = await connection.QueryAsync<Puestos>(
-                    sql: "",
+                    sql: "usp_ListarPuestos",
                     commandType: System.Data.CommandType.StoredProcedure
                     );
 
@@ -57,7 +57,7 @@ namespace SysVacacionesDAL
                 var connection = connectionManager.GetConnection();
                 var parameters = new DynamicParameters();
 
-                parameters.Add("@EmpleadoID", puestos.nombrePuesto, System.Data.DbType.String);
+                parameters.Add("@EmpleadoID", puestos.ID, System.Data.DbType.Int32);
 
                 var result = await connection.QueryAsync<DisponiblesAgregar>(
                     sql: "",
@@ -82,8 +82,8 @@ namespace SysVacacionesDAL
                 var connection = connectionManager.GetConnection();
                 var parameters = new DynamicParameters();
 
-                parameters.Add("@ID", puestos.puestoID, System.Data.DbType.Int32);
-                parameters.Add("@EmpleadoID", puestos.nombrePuesto, System.Data.DbType.String);
+                parameters.Add("@ID", puestos.ID, System.Data.DbType.Int32);
+                parameters.Add("@EmpleadoID", puestos.Nombre, System.Data.DbType.String);
 
                 var result = await connection.QueryAsync<DisponiblesAgregar>(
                     sql: "",
@@ -107,8 +107,8 @@ namespace SysVacacionesDAL
                 var connection = connectionManager.GetConnection();
                 var parameters = new DynamicParameters();
 
-                parameters.Add("@ID", puestos.puestoID, System.Data.DbType.Int32);
-                parameters.Add("@EmpleadoID", puestos.nombrePuesto, System.Data.DbType.String);
+                parameters.Add("@ID", puestos.ID, System.Data.DbType.Int32);
+                parameters.Add("@EmpleadoID", puestos.Nombre, System.Data.DbType.String);
 
                 var result = await connection.QueryAsync<DisponiblesAgregar>(
                     sql: "",
