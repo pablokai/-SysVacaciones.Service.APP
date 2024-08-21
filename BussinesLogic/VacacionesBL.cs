@@ -24,7 +24,7 @@ namespace SysVacacionesBL
             return await vacacionesDA.listarVacaciones();
         }
 
-        public async Task<VacacionesAgregar> insertarVacaciones(Vacaciones vacaciones)
+        public async Task<Respuesta> insertarVacaciones(VacacionesAgregar vacaciones)
         {
             return await vacacionesDA.insertarVacaciones(vacaciones);
         }

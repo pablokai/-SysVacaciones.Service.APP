@@ -51,9 +51,9 @@ namespace SysVacacionesDAL
         }
 
 
-        public async Task<EmpleadosAgregar> insertarEmpleado(Empleados empleados)
+        public async Task<Respuesta> insertarEmpleado(Empleados empleados)
         {
-            EmpleadosAgregar respuesta = new EmpleadosAgregar();
+            Respuesta respuesta = new Respuesta();
             try
             {
                 var connection = connectionManager.GetConnection();
@@ -72,11 +72,15 @@ namespace SysVacacionesDAL
                 parameters.Add("@Puesto", empleados.puesto, System.Data.DbType.String);
                 parameters.Add("@Salario", empleados.salario, System.Data.DbType.Decimal);
 
-                var result = await connection.QueryAsync<Empleados>(
+                var result = await connection.QueryAsync<Respuesta>(
                     sql: "sp_InsertarEmpleado",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                     );
+                if (result != null)
+                {
+                    respuesta = result.FirstOrDefault();
+                }
             }
             catch (Exception)
             {
@@ -87,9 +91,9 @@ namespace SysVacacionesDAL
 
         }
 
-        public async Task<EmpleadosEditar> editarEmpleado(Empleados empleados)
+        public async Task<Respuesta> editarEmpleado(Empleados empleados)
         {
-            EmpleadosEditar respuesta = new EmpleadosEditar();
+            Respuesta respuesta = new Respuesta();
             try
             {
                 var connection = connectionManager.GetConnection();
@@ -108,11 +112,15 @@ namespace SysVacacionesDAL
                 parameters.Add("@Salario", empleados.salario, System.Data.DbType.Decimal);
                 parameters.Add("@Estado", empleados.estado, System.Data.DbType.String);
 
-                var result = await connection.QueryAsync<DisponiblesAgregar>(
+                var result = await connection.QueryAsync<Respuesta>(
                     sql: "sp_ActualizarEmpleado",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                     );
+                if (result != null)
+                {
+                    respuesta = result.FirstOrDefault();
+                }
             }
             catch (Exception)
             {
@@ -167,7 +175,7 @@ namespace SysVacacionesDAL
                 var connection = connectionManager.GetConnection();
                 var parameters = new DynamicParameters();
 
-                parameters.Add("@ID", empleados.Id, System.Data.DbType.Int32);
+                parameters.Add("@Cedula", empleados.cedula, System.Data.DbType.String);
 
                 var result = await connection.QueryAsync<EmpleadosDetalles>(
                     sql: "sp_ObtenerEmpleado",

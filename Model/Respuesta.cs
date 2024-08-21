@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace SysVacacionesMODEL
 {
-    public class Respuesta<T>
+    public class Respuesta
     {
-        public List<T> Lsita {  get; set; }
-        public Respuesta()
-        {
-            this.Lsita = new List<T>();
-        }
+       public string? Resultado {  get; set; }
+        
+        public int? estado { get; set; }
     }
 }

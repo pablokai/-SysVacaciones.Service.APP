@@ -11,19 +11,23 @@ namespace Model.Vacaciones
     public class VacacionesAgregar
     {
         [Display(Name = "ID Empleado")]
-        public int empleadoID { get; set; }
+        public int? empleadoID { get; set; }
 
         [Display(Name = "Fecha Solicitud")]
-        public DateFormat fechaSolicitud { get; set; }
+        public DateTime? fechaSolicitud { get; set; }
 
         [Display(Name = "Dias Solicitados")]
-        public int diasSolicitados { get; set; }
+        public int? diasSolicitados { get; set; }
 
         [Display(Name = "Fecha Salida")]
-        public DateFormat fechaSalida { get; set; }
+        public DateTime? fechaSalida { get; set; }
 
         [Display(Name = "Fecha Entrada")]
-        public DateFormat fechaEntrada { get; set; }
+        public DateTime? fechaEntrada { get; set; }
+
+        public string? Resultado { get; set; }
+
+
 
     }
 }

@@ -32,7 +32,7 @@ namespace SysVacacionesDAL
             {
                 var connection = connectionManager.GetConnection();
                 var result = await connection.QueryAsync<Vacaciones>(
-                    sql: "",
+                    sql: "usp_ListarVacaciones",
                     commandType: System.Data.CommandType.StoredProcedure
                     );
 
@@ -50,9 +50,9 @@ namespace SysVacacionesDAL
         }
 
 
-        public async Task<VacacionesAgregar> insertarVacaciones(Vacaciones vacaciones)
+        public async Task<Respuesta> insertarVacaciones(VacacionesAgregar vacaciones)
         {
-            VacacionesAgregar respuesta = new VacacionesAgregar();
+            Respuesta respuesta = new Respuesta();
             try
             {
                 var connection = connectionManager.GetConnection();
@@ -64,11 +64,15 @@ namespace SysVacacionesDAL
                 parameters.Add("@FechaSalida", vacaciones.fechaSalida, System.Data.DbType.Date);
                 parameters.Add("@FechaEntrada", vacaciones.fechaEntrada, System.Data.DbType.Date);
 
-                var result = await connection.QueryAsync<VacacionesAgregar>(
+                var result = await connection.QueryAsync<Respuesta>(
                     sql: "sp_SolicitarVacaciones",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                     );
+                if( result != null )
+                {
+                    respuesta = result.FirstOrDefault();
+                }
             }
             catch (Exception)
             {

@@ -60,9 +60,9 @@ namespace SysVacaciones.Service.Controllers
                     estado = empleados.estado
                 };
 
-                await empleadosBL.insertarEmpleado(nuevoEmpleado);
+                var respuesta = await empleadosBL.insertarEmpleado(nuevoEmpleado);
 
-                return StatusCode(200, nuevoEmpleado);
+                return StatusCode(200, respuesta);
 
             }
             catch (Exception ex)
@@ -183,16 +183,16 @@ namespace SysVacaciones.Service.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("BuscarEmpleado")]
-        public async Task<ActionResult> BuscarEmpleado(Empleados empleados)
+        public async Task<ActionResult> BuscarEmpleado([FromQuery] string cedula)
         {
             try
             {
 
                 Empleados nuevoEmpleado = new Empleados()
                 {
-                    Id = empleados.Id
+                    cedula = cedula
                 };
                 var respuesta = await empleadosBL.buscarEmpleado(nuevoEmpleado);
 

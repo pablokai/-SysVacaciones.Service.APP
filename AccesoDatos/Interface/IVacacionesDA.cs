@@ -11,7 +11,7 @@ namespace SysVacacionesDAL.Interface
     public interface IVacacionesDA
     {
         Task<List<Vacaciones>> listarVacaciones();
-        Task<VacacionesAgregar> insertarVacaciones(Vacaciones vacaciones);
+        Task<Respuesta> insertarVacaciones(VacacionesAgregar vacaciones);
         Task<VacacionesEditar> editarVacaciones(Vacaciones vacaciones);
         Task<VacacionesDetalle> obtenerVacaciones(Vacaciones vacaciones);
     }

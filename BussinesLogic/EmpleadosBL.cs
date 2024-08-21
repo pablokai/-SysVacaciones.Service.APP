@@ -24,12 +24,12 @@ namespace SysVacacionesBL
             return await empleadoDA.listarEmpleados();
         }
 
-        public async Task<EmpleadosAgregar> insertarEmpleado(Empleados empleado)
+        public async Task<Respuesta> insertarEmpleado(Empleados empleado)
         {
             return await empleadoDA.insertarEmpleado(empleado);
         }
 
-        public async Task<EmpleadosEditar> editarEmpleado(Empleados empleado)
+        public async Task<Respuesta> editarEmpleado(Empleados empleado)
         {
             return await empleadoDA.editarEmpleado(empleado);
         }

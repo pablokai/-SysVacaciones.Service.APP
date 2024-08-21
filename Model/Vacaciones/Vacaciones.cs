@@ -14,12 +14,16 @@ namespace Model.Vacaciones
 
         public int empleadoID { get; set; }
 
-        public DateFormat fechaSolicitud { get; set; }
+        public DateTime fechaSolicitud { get; set; }
 
         public int diasSolicitados { get; set; }
 
-        public DateFormat fechaSalida { get; set; }
+        public DateTime fechaSalida { get; set; }
 
-        public DateFormat fechaEntrada { get; set; }
+        public DateTime fechaEntrada { get; set; }
+        
+        public string Nombre { get; set; }
+
+        public string Cedula { get; set; }
     }
 }
