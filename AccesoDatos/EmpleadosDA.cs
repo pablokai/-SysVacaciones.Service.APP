@@ -71,6 +71,7 @@ namespace SysVacacionesDAL
                 parameters.Add("@Direccion", empleados.direccion, System.Data.DbType.String);
                 parameters.Add("@Puesto", empleados.puesto, System.Data.DbType.String);
                 parameters.Add("@Salario", empleados.salario, System.Data.DbType.Decimal);
+                parameters.Add("@diasDisponibles", empleados.diasDisponibles, System.Data.DbType.Int32);
 
                 var result = await connection.QueryAsync<Respuesta>(
                     sql: "sp_InsertarEmpleado",
@@ -111,6 +112,7 @@ namespace SysVacacionesDAL
                 parameters.Add("@Puesto", empleados.puesto, System.Data.DbType.String);
                 parameters.Add("@Salario", empleados.salario, System.Data.DbType.Decimal);
                 parameters.Add("@Estado", empleados.estado, System.Data.DbType.String);
+                parameters.Add("@diasDisponibles", empleados.diasDisponibles, System.Data.DbType.Int32);
 
                 var result = await connection.QueryAsync<Respuesta>(
                     sql: "sp_ActualizarEmpleado",

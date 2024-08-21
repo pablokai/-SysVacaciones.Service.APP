@@ -51,5 +51,6 @@ namespace Model.Empleados
 
         [Display(Name = "Estado")]
         public string estado { get; set; }
+        public int? diasDisponibles { get; set; }
     }
 }

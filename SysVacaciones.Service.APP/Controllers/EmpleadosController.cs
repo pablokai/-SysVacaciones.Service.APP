@@ -57,7 +57,8 @@ namespace SysVacaciones.Service.Controllers
                     direccion = empleados.direccion,
                     puesto = empleados.puesto,
                     salario = empleados.salario,
-                    estado = empleados.estado
+                    estado = empleados.estado,
+                    diasDisponibles = empleados.diasDisponibles
                 };
 
                 var respuesta = await empleadosBL.insertarEmpleado(nuevoEmpleado);
@@ -130,7 +131,8 @@ namespace SysVacaciones.Service.Controllers
                     direccion = empleados.direccion,
                     puesto = empleados.puesto,
                     salario = empleados.salario,
-                    estado = empleados.estado
+                    estado = empleados.estado,
+                    diasDisponibles = empleados.diasDisponibles
                 };
                 var respuesta = await empleadosBL.editarEmpleado(nuevoEmpleado);
 

@@ -37,5 +37,6 @@ namespace Model.Empleados
         public decimal salario { get; set; }
 
         public string estado { get; set; }
+        public int? diasDisponibles { get; set; }
     }
 }
